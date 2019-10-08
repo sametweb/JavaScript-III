@@ -142,13 +142,16 @@ function Hero(heroObj) {
 Hero.prototype = Object.create(Humanoid.prototype);
 
 Hero.prototype.hit = function(enemy) {
+  if (enemy.healthPoints <= 0) {
+    return "Game Over!";
+  }
   enemy.healthPoints = enemy.healthPoints - this.dmg;
   let leftHealthMessage = "";
   if (enemy.healthPoints <= 0) {
     enemy.healthPoints = 0;
-    leftHealthMessage = "Now it's dead.";
+    leftHealthMessage = `Now ${enemy.name} is dead. ${this.name} wins the game.`;
   } else {
-    leftHealthMessage = `Now ${enemy.name} has ${enemy.healthPoints} health.`;
+    leftHealthMessage = `Now ${enemy.name} has ${enemy.healthPoints} health left.`;
   }
   return `${this.name} hit ${this.dmg} damage to ${enemy.name}. ${leftHealthMessage}`;
 };
@@ -193,5 +196,6 @@ console.log(sniper.hit(pudge));
 console.log(sniper.hit(pudge));
 console.log(pudge.hit(sniper));
 console.log(pudge.hit(sniper));
+console.log(sniper.hit(pudge));
 console.log(sniper.hit(pudge));
 console.log(sniper.hit(pudge));
