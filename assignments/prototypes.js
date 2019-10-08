@@ -143,7 +143,7 @@ Hero.prototype = Object.create(Humanoid.prototype);
 
 Hero.prototype.hit = function(enemy) {
   if (enemy.healthPoints <= 0) {
-    return "Game Over!";
+    return "Game Over! Stop hitting your enemy!!!";
   }
   enemy.healthPoints = enemy.healthPoints - this.dmg;
   let leftHealthMessage = "";
