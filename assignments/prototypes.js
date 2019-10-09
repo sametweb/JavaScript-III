@@ -158,7 +158,9 @@ Hero.prototype.hit = function(enemy) {
     if (enemy.healthPoints <= 0) {
       enemy.healthPoints = 0;
       message = `Now ${enemy.name} is dead. ${this.name} wins the game.`;
-      document.getElementById(`over`).innerHTML = `GAME OVER!`;
+      document.getElementById(
+        `over`
+      ).innerHTML = `GAME OVER! ${this.name} WINS`;
     } else {
       message = `Now ${enemy.name} has ${enemy.healthPoints} health left.`;
     }

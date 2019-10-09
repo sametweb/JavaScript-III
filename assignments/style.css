@@ -1,3 +1,6 @@
+* {
+  font-family: Tahoma;
+}
 .healthBar {
   display: flex;
   width: 500px;
@@ -16,4 +19,5 @@
 
 #over {
   font-size: 60px;
+  text-transform: uppercase;
 }
