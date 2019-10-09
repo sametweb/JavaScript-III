@@ -142,18 +142,33 @@ function Hero(heroObj) {
 Hero.prototype = Object.create(Humanoid.prototype);
 
 Hero.prototype.hit = function(enemy) {
-  if (enemy.healthPoints <= 0) {
-    return "Game Over! Stop hitting your enemy!!!";
-  }
-  enemy.healthPoints = enemy.healthPoints - this.dmg;
-  let leftHealthMessage = "";
-  if (enemy.healthPoints <= 0) {
-    enemy.healthPoints = 0;
-    leftHealthMessage = `Now ${enemy.name} is dead. ${this.name} wins the game.`;
+  document.getElementById(
+    `${this.name}Health`
+  ).innerHTML = `${this.name}: ${this.healthPoints} HP`;
+  document.getElementById(
+    `${enemy.name}Health`
+  ).innerHTML = `${enemy.name}: ${enemy.healthPoints} HP`;
+
+  if (this.healthPoints > 0) {
+    if (enemy.healthPoints <= 0) {
+      return "Game Over! Stop hitting your enemy!!!";
+    }
+    enemy.healthPoints = enemy.healthPoints - this.dmg;
+    let message = "";
+    if (enemy.healthPoints <= 0) {
+      enemy.healthPoints = 0;
+      message = `Now ${enemy.name} is dead. ${this.name} wins the game.`;
+      document.getElementById(`over`).innerHTML = `GAME OVER!`;
+    } else {
+      message = `Now ${enemy.name} has ${enemy.healthPoints} health left.`;
+    }
+    document.getElementById(
+      `${enemy.name}Health`
+    ).innerHTML = `${enemy.name}: ${enemy.healthPoints} HP`;
+    return `${this.name} hit ${this.dmg} damage to ${enemy.name}. ${message}`;
   } else {
-    leftHealthMessage = `Now ${enemy.name} has ${enemy.healthPoints} health left.`;
+    return `You are dead ${this.name}, you can't hit ${enemy.name} anymore!`;
   }
-  return `${this.name} hit ${this.dmg} damage to ${enemy.name}. ${leftHealthMessage}`;
 };
 
 function Villain(villainObj) {
@@ -192,10 +207,12 @@ const sniper = new Villain({
   dmg: 30
 });
 
-console.log(sniper.hit(pudge));
-console.log(sniper.hit(pudge));
-console.log(pudge.hit(sniper));
-console.log(pudge.hit(sniper));
-console.log(sniper.hit(pudge));
-console.log(sniper.hit(pudge));
-console.log(sniper.hit(pudge));
+document.addEventListener("keypress", hitEnemy);
+
+function hitEnemy(e) {
+  if (e.key == "s" || e.key == "S") {
+    console.log(sniper.hit(pudge));
+  } else if (e.key == "p" || e.key == "P") {
+    console.log(pudge.hit(sniper));
+  }
+}
